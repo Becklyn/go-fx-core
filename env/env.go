@@ -17,11 +17,11 @@ var Module = fx.Invoke(
 
 func useEnvironment() {
 	if err := godotenv.Load(".env.local"); err != nil {
-		godotenv.Load("../.env.local")
+		_ = godotenv.Load("../.env.local")
 	}
 
 	if err := godotenv.Load(".env"); err != nil {
-		godotenv.Load("../.env")
+		_ = godotenv.Load("../.env")
 	}
 
 	if os.Getenv(APP_ENV) == "" {

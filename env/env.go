@@ -1,11 +1,12 @@
 package env
 
 import (
-	"github.com/joho/godotenv"
-	"github.com/sirupsen/logrus"
-	"go.uber.org/fx"
 	"os"
 	"strconv"
+	"strings"
+
+	"github.com/joho/godotenv"
+	"go.uber.org/fx"
 )
 
 const APP_ENV = "APP_ENV"
@@ -14,25 +15,17 @@ var Module = fx.Invoke(
 	useEnvironment,
 )
 
-func useEnvironment(logger *logrus.Logger) {
-	production := false
-	if _, err := os.Stat(".env"); os.IsNotExist(err) {
-		if _, err := os.Stat("../.env"); os.IsNotExist(err) {
-			production = true
-			_ = os.Setenv(APP_ENV, "production")
-		}
+func useEnvironment() {
+	if err := godotenv.Load(".env.local"); err != nil {
+		godotenv.Load("../.env.local")
 	}
 
-	if !production {
-		if err := godotenv.Load(".env"); err != nil {
-			if err := godotenv.Load("../.env"); err != nil {
-				logger.Warn("Development environment file could not be located")
-			}
-		}
+	if err := godotenv.Load(".env"); err != nil {
+		godotenv.Load("../.env")
 	}
 
 	if os.Getenv(APP_ENV) == "" {
-		_ = os.Setenv(APP_ENV, "development")
+		_ = os.Setenv(APP_ENV, "production")
 	}
 }
 
@@ -41,7 +34,7 @@ func GetEnvironment() string {
 }
 
 func IsDevelopment() bool {
-	return os.Getenv(APP_ENV) == "development"
+	return strings.Contains(strings.ToLower(os.Getenv(APP_ENV)), "dev")
 }
 
 func String(key string) string {
@@ -65,6 +58,6 @@ func Int(key string) int {
 }
 
 func Bool(key string) bool {
-	value := os.Getenv(key)
+	value := strings.ToLower(os.Getenv(key))
 	return value == "true" || value == "1"
 }

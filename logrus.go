@@ -23,7 +23,7 @@ var LogrusModule = fx.Options(
 func newLogrus() *logrus.Logger {
 	logger := logrus.New()
 
-	logrus.SetOutput(os.Stdout)
+	logger.SetOutput(os.Stdout)
 	logger.SetFormatter(&logrus.TextFormatter{
 		TimestampFormat: time.RFC822,
 	})
@@ -34,10 +34,9 @@ func newLogrus() *logrus.Logger {
 }
 
 func logrusFxLogger(logger *logrus.Logger) fxevent.Logger {
-	if env.IsDevelopment() {
-
+	if !env.IsDevelopment() {
+		return fxevent.NopLogger
 	}
-
 	return &fxevent.ConsoleLogger{W: logger.Writer()}
 }
 

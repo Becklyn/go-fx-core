@@ -11,3 +11,9 @@
 - (feature) Fiber module
 - (feature) Logrus module
 - (feature) Validator module
+
+# 1.0.0-alpha2
+
+- (feature) Add gRPC server module
+- (improvement) Env variable functions now have methods with default values
+- (improvement) Int env variable function now returns 

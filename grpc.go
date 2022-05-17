@@ -40,7 +40,7 @@ func newGrpc(lifecycle fx.Lifecycle, logger *logrus.Logger) *grpc.Server {
 					logger.Fatal(err)
 				}
 			}()
-			logger.Info(fmt.Sprintf("gRPC server running on %s", uri.Host))
+			logger.Info(fmt.Sprintf("gRPC server running on %s://%s", uri.Scheme, uri.Host))
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {

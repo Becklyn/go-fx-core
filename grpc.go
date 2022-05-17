@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net"
+	"net/url"
 
 	"github.com/Becklyn/go-fx-core/env"
 	"github.com/sirupsen/logrus"
@@ -17,9 +18,13 @@ var GrpcModule = fx.Provide(
 )
 
 func newGrpc(lifecycle fx.Lifecycle, logger *logrus.Logger) *grpc.Server {
-	addr := env.StringWithDefault("GRPC_ADDR", ":9000")
+	addr := env.StringWithDefault("GRPC_ADDR", "tcp://0.0.0.0:9000")
+	uri, err := url.Parse(addr)
+	if err != nil {
+		logger.Fatal(err)
+	}
 
-	listener, err := net.Listen("tcp", addr)
+	listener, err := net.Listen(uri.Scheme, uri.Host)
 	if err != nil {
 		logger.Fatal(err)
 	}
@@ -35,7 +40,7 @@ func newGrpc(lifecycle fx.Lifecycle, logger *logrus.Logger) *grpc.Server {
 					logger.Fatal(err)
 				}
 			}()
-			logger.Info(fmt.Sprintf("gRPC server bound on host 0.0.0.0 and port %s", addr))
+			logger.Info(fmt.Sprintf("gRPC server running on %s", uri.Host))
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {

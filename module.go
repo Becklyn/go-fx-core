@@ -9,5 +9,6 @@ var Module = fx.Options(
 	env.Module,
 	LogrusModule,
 	FiberModule,
+	GrpcModule,
 	ValidatorModule,
 )

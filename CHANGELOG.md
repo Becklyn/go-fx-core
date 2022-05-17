@@ -21,3 +21,7 @@
 # 1.0.0-alpha3
 
 - (improvement) Improve gRPC listen addr parsing
+
+# 1.0.0-alpha4
+
+- (improvement) Improve gRPC address logging

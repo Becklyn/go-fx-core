@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 
+	"github.com/Becklyn/go-fx-core/env"
 	"github.com/sirupsen/logrus"
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
@@ -16,7 +17,7 @@ var GrpcModule = fx.Provide(
 )
 
 func newGrpc(lifecycle fx.Lifecycle, logger *logrus.Logger) *grpc.Server {
-	addr := ":9000"
+	addr := env.StringWithDefault("GRPC_ADDR", ":9000")
 
 	listener, err := net.Listen("tcp", addr)
 	if err != nil {

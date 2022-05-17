@@ -17,3 +17,7 @@
 - (feature) Add gRPC server module
 - (improvement) Env variable functions now have methods with default values
 - (improvement) Int env variable function now returns 
+
+# 1.0.0-alpha3
+
+- (improvement) Improve gRPC listen addr parsing

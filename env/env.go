@@ -53,13 +53,13 @@ func Int(key string) int {
 	value := os.Getenv(key)
 
 	if len(value) == 0 {
-		return 0
+		return -1
 	}
 
 	intValue, err := strconv.Atoi(value)
 
 	if err != nil {
-		return 0
+		return -1
 	}
 
 	return intValue
@@ -67,7 +67,7 @@ func Int(key string) int {
 
 func IntWithDefault(key string, defaultValue int) int {
 	value := Int(key)
-	if value == 0 {
+	if value == -1 {
 		return defaultValue
 	}
 	return value

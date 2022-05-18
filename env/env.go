@@ -11,11 +11,13 @@ import (
 
 const APP_ENV = "APP_ENV"
 
-var Module = fx.Invoke(
-	useEnvironment,
+type Env struct{}
+
+var Module = fx.Provide(
+	newEnvironment,
 )
 
-func useEnvironment() {
+func newEnvironment() *Env {
 	if err := godotenv.Load(".env.local"); err != nil {
 		_ = godotenv.Load("../.env.local")
 	}
@@ -27,6 +29,8 @@ func useEnvironment() {
 	if os.Getenv(APP_ENV) == "" {
 		_ = os.Setenv(APP_ENV, "production")
 	}
+
+	return &Env{}
 }
 
 func GetEnvironment() string {

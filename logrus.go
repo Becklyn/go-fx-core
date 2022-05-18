@@ -20,7 +20,7 @@ var LogrusModule = fx.Options(
 	fx.WithLogger(logrusFxLogger),
 )
 
-func newLogrus() *logrus.Logger {
+func newLogrus(_ *env.Env) *logrus.Logger {
 	logger := logrus.New()
 
 	logger.SetOutput(os.Stdout)

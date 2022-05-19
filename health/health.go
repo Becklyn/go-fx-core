@@ -2,6 +2,7 @@ package health
 
 import (
 	"fmt"
+	"sync"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/fx"
@@ -10,9 +11,11 @@ import (
 type status struct {
 	Healthy bool
 	Reason  *string
+
+	mux sync.Mutex
 }
 
-var serviceStatus = status{
+var serviceStatus = &status{
 	Healthy: true,
 }
 
@@ -31,7 +34,7 @@ func useHealthEndpoint(app *fiber.App) {
 	})
 }
 
-func GetStatus() status {
+func GetStatus() *status {
 	return serviceStatus
 }
 
@@ -40,15 +43,17 @@ func IsHealthy() bool {
 }
 
 func StatusHealthy() {
-	serviceStatus = status{
-		Healthy: true,
-		Reason:  nil,
-	}
+	serviceStatus.mux.Lock()
+	defer serviceStatus.mux.Unlock()
+
+	serviceStatus.Healthy = true
+	serviceStatus.Reason = nil
 }
 
 func StatusNotHealthy(reason string) {
-	serviceStatus = status{
-		Healthy: false,
-		Reason:  &reason,
-	}
+	serviceStatus.mux.Lock()
+	defer serviceStatus.mux.Unlock()
+
+	serviceStatus.Healthy = false
+	serviceStatus.Reason = &reason
 }

@@ -11,7 +11,8 @@ type ServiceHealth struct {
 
 func newServiceHealth() *ServiceHealth {
 	return &ServiceHealth{
-		components: make(map[string]componentHealth),
+		components:       make(map[string]componentHealth),
+		componentChanged: make(chan componentChanged),
 	}
 }
 

@@ -34,10 +34,6 @@ func useHealthEndpoint(app *fiber.App) {
 	})
 }
 
-func GetStatus() *status {
-	return serviceStatus
-}
-
 func IsHealthy() bool {
 	return serviceStatus.Healthy
 }

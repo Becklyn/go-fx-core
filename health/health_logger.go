@@ -24,18 +24,22 @@ func useHealthLogger(lifecycle fx.Lifecycle, logger HealthLogger) {
 		},
 	})
 
-	go func() {
-		for {
-			select {
-			case <-ctx.Done():
-				return
-			case component := <-logger.Health.componentChanged:
-				if component.health.healthy {
-					logrus.WithField("component", component.name).Info("Component is healthy (again)")
-				} else {
-					logrus.WithField("component", component.name).Error("Component became unhealthy")
-				}
+	go logger.Execute(ctx)
+}
+
+func (l *HealthLogger) Execute(ctx context.Context) {
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		case component := <-l.Health.componentChanged:
+			if component.health.healthy {
+				logrus.WithField("component", component.name).
+					Info("Component is healthy (again)")
+			} else {
+				logrus.WithField("component", component.name).
+					Error("Component became unhealthy")
 			}
 		}
-	}()
+	}
 }

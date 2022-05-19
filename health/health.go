@@ -1,10 +1,12 @@
 package health
 
 import (
+	"context"
 	"fmt"
 	"sync"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/sirupsen/logrus"
 	"go.uber.org/fx"
 )
 
@@ -21,6 +23,7 @@ var serviceStatus = &status{
 
 var Module = fx.Invoke(
 	useHealthEndpoint,
+	useHealthLogger,
 )
 
 func useHealthEndpoint(app *fiber.App) {
@@ -32,6 +35,37 @@ func useHealthEndpoint(app *fiber.App) {
 		}
 		return c.Status(200).SendString("Healthy")
 	})
+}
+
+func useHealthLogger(lifecycle fx.Lifecycle, logrus *logrus.Logger) {
+	ctx, cancel := context.WithCancel(context.Background())
+	healthy := true
+
+	lifecycle.Append(fx.Hook{
+		OnStop: func(ctx context.Context) error {
+			cancel()
+			return nil
+		},
+	})
+
+	go func() {
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			default:
+				if healthy != serviceStatus.Healthy {
+					if healthy {
+						logrus.Info("Healthy")
+					} else {
+						logrus.WithField("reason", *serviceStatus.Reason).
+							Warn("Service unavailable")
+					}
+				}
+				healthy = serviceStatus.Healthy
+			}
+		}
+	}()
 }
 
 func IsHealthy() bool {

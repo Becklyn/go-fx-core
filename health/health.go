@@ -24,7 +24,7 @@ func useHealthEndpoint(app *fiber.App) {
 	app.Get("/health", func(c *fiber.Ctx) error {
 		if !serviceStatus.Healthy {
 			return c.Status(503).SendString(
-				fmt.Sprintf("Not healthy: %s", *serviceStatus.Reason),
+				fmt.Sprintf("Service unavailable: %s", *serviceStatus.Reason),
 			)
 		}
 		return c.Status(200).SendString("Healthy")

@@ -6,7 +6,7 @@ import (
 
 var Module = fx.Options(
 	fx.Provide(
-		newServiceHealth,
+		NewServiceHealth,
 	),
 	fx.Invoke(
 		useHealthEndpoint,

@@ -9,7 +9,7 @@ type ServiceHealth struct {
 	mux sync.RWMutex
 }
 
-func newServiceHealth() *ServiceHealth {
+func NewServiceHealth() *ServiceHealth {
 	return &ServiceHealth{
 		components:       make(map[string]componentHealth),
 		componentChanged: make(chan componentChanged),
@@ -34,7 +34,7 @@ func (s *ServiceHealth) IsHealthy(component ...string) (bool, string) {
 	}
 
 	for _, c := range component {
-		if !s.components[c].healthy {
+		if ch, ok := s.components[c]; ok && !ch.healthy {
 			return false, s.components[c].reason
 		}
 	}

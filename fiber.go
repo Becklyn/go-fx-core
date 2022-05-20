@@ -11,10 +11,31 @@ import (
 )
 
 var FiberModule = fx.Provide(
+	newFiberMiddlewareRegistry,
 	newFiber,
 )
 
-func newFiber(lifecycle fx.Lifecycle, logger *logrus.Logger) *fiber.App {
+type FiberMiddleware struct {
+	Name    string
+	Route   string
+	Handler func(c *fiber.Ctx) error
+}
+
+type FiberMiddlewareRegistry []FiberMiddleware
+
+func newFiberMiddlewareRegistry() *FiberMiddlewareRegistry {
+	return &FiberMiddlewareRegistry{}
+}
+
+func (r *FiberMiddlewareRegistry) Use(middleware FiberMiddleware) {
+	*r = append(*r, middleware)
+}
+
+func newFiber(
+	lifecycle fx.Lifecycle,
+	middlewareRegisty *FiberMiddlewareRegistry,
+	logger *logrus.Logger,
+) *fiber.App {
 	addr := env.StringWithDefault("FIBER_ADDR", ":3000")
 
 	app := fiber.New()
@@ -24,9 +45,15 @@ func newFiber(lifecycle fx.Lifecycle, logger *logrus.Logger) *fiber.App {
 		Output: logger.Writer(),
 	}))
 
-	app.Get("/health", func(ctx *fiber.Ctx) error {
-		return ctx.SendStatus(fiber.StatusOK)
-	})
+	for _, middleware := range *middlewareRegisty {
+		if middleware.Route == "" {
+			app.Use(middleware.Handler)
+			logger.Infof("Registered %s middleware globally", middleware.Name)
+		} else {
+			app.Use(middleware.Route, middleware.Handler)
+			logger.Infof("Registered %s middleware on route %s", middleware.Name, middleware.Route)
+		}
+	}
 
 	lifecycle.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {

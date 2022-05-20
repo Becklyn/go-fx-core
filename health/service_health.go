@@ -1,18 +1,22 @@
 package health
 
-import "sync"
+import (
+	"sync"
+
+	"github.com/sirupsen/logrus"
+)
 
 type ServiceHealth struct {
-	components       map[string]componentHealth
-	componentChanged chan componentChanged
+	components map[string]componentHealth
 
-	mux sync.RWMutex
+	logger *logrus.Logger
+	mux    sync.RWMutex
 }
 
-func NewServiceHealth() *ServiceHealth {
+func NewServiceHealth(logger *logrus.Logger) *ServiceHealth {
 	return &ServiceHealth{
-		components:       make(map[string]componentHealth),
-		componentChanged: make(chan componentChanged),
+		components: make(map[string]componentHealth),
+		logger:     logger,
 	}
 }
 
@@ -50,10 +54,9 @@ func (s *ServiceHealth) SetHealthy(component string) {
 	}
 	s.components[component] = componentHealth
 
-	s.componentChanged <- componentChanged{
-		name:   component,
-		health: componentHealth,
-	}
+	s.logger.WithFields(logrus.Fields{
+		"component": component,
+	}).Warn("Component is healthy (again)")
 }
 
 func (s *ServiceHealth) SetUnhealthy(component string, reason string) {
@@ -66,8 +69,8 @@ func (s *ServiceHealth) SetUnhealthy(component string, reason string) {
 	}
 	s.components[component] = componentHealth
 
-	s.componentChanged <- componentChanged{
-		name:   component,
-		health: componentHealth,
-	}
+	s.logger.WithFields(logrus.Fields{
+		"component": component,
+		"reason":    reason,
+	}).Warn("Component became unhealthy")
 }

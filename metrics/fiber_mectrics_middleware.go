@@ -3,7 +3,7 @@ package metrics
 import (
 	"strconv"
 
-	core "github.com/Becklyn/go-fx-core"
+	"github.com/Becklyn/go-fx-core/web"
 	"github.com/gofiber/fiber/v2"
 	"github.com/prometheus/client_golang/prometheus"
 	"go.uber.org/fx"
@@ -72,10 +72,10 @@ type FiberMetricsMiddleware struct {
 }
 
 func useFiberMetricsMiddleware(
-	registry *core.FiberMiddlewareRegistry,
+	registry *web.FiberMiddlewareRegistry,
 	middleware FiberMetricsMiddleware,
 ) {
-	registry.Use(core.FiberMiddleware{
+	registry.Use(web.FiberMiddleware{
 		Name:    "Fiber metrics",
 		Handler: middleware.Handler,
 	})

@@ -1,4 +1,9 @@
-# 1.0.0-alpha5
+# v1.0.0-alpha6
+
+- (improvement) Add metrics module to core module
+- (internal) Move fiber module to web package
+
+# v1.0.0-alpha5
 
 - (internal) Fix env module initialization order
 - (feature) Add health module
@@ -6,21 +11,21 @@
 - (feature) Add prometheus metrics module
 - (feature) Add fiber middleware registry
 
-# 1.0.0-alpha4
+# v1.0.0-alpha4
 
 - (improvement) Improve gRPC address logging
 
-# 1.0.0-alpha3
+# v1.0.0-alpha3
 
 - (improvement) Improve gRPC listen addr parsing
 
-# 1.0.0-alpha2
+# v1.0.0-alpha2
 
 - (feature) Add gRPC server module
 - (improvement) Env variable functions now have methods with default values
 - (improvement) Int env variable function now returns
 
-# 1.0.0-alpha1
+# v1.0.0-alpha1
 
 - (internal) Add code style tests
 - (improvement) Support .env
@@ -28,7 +33,7 @@
 - (feature) GraphQL module
 - (feature) Core module
 
-# 1.0.0-alpha
+# v1.0.0-alpha
 
 - (feature) Fiber module
 - (feature) Logrus module

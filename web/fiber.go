@@ -1,4 +1,4 @@
-package core
+package web
 
 import (
 	"context"
@@ -9,27 +9,6 @@ import (
 	"github.com/sirupsen/logrus"
 	"go.uber.org/fx"
 )
-
-var FiberModule = fx.Provide(
-	newFiberMiddlewareRegistry,
-	newFiber,
-)
-
-type FiberMiddleware struct {
-	Name    string
-	Route   string
-	Handler func(c *fiber.Ctx) error
-}
-
-type FiberMiddlewareRegistry []FiberMiddleware
-
-func newFiberMiddlewareRegistry() *FiberMiddlewareRegistry {
-	return &FiberMiddlewareRegistry{}
-}
-
-func (r *FiberMiddlewareRegistry) Use(middleware FiberMiddleware) {
-	*r = append(*r, middleware)
-}
 
 func newFiber(
 	lifecycle fx.Lifecycle,

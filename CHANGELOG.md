@@ -1,3 +1,8 @@
+# 1.0.0-alpha6
+
+- (improvement) Add metrics module to core module
+- (internal) Move fiber module to web package
+
 # 1.0.0-alpha5
 
 - (internal) Fix env module initialization order

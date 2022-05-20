@@ -10,6 +10,5 @@ var Module = fx.Options(
 	),
 	fx.Invoke(
 		useHealthEndpoint,
-		useHealthLogger,
 	),
 )

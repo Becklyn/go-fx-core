@@ -20,7 +20,7 @@ var LogrusModule = fx.Options(
 	fx.WithLogger(logrusFxLogger),
 )
 
-func newLogrus() *logrus.Logger {
+func newLogrus(_ *env.Env) *logrus.Logger {
 	logger := logrus.New()
 
 	logger.SetOutput(os.Stdout)
@@ -42,8 +42,8 @@ func logrusFxLogger(logger *logrus.Logger) fxevent.Logger {
 
 func getLogLevel() logrus.Level {
 	switch env.String(LOG_LEVEL) {
-	case "info":
-		return logrus.InfoLevel
+	case "debug":
+		return logrus.DebugLevel
 	case "warn":
 		return logrus.WarnLevel
 	case "error":

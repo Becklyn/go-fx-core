@@ -24,3 +24,5 @@ jobs:
         with:
           version: latest
           args: --enable gofmt
+      - name: Run Tests
+        run: go test `go list ./...`

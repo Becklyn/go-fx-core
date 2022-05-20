@@ -1,6 +1,8 @@
 # 1.0.0-alpha5
 
 - (internal) Fix env module initialization order
+- (feature) Add health module
+- (bug) Allow debug log level configuration
 
 # 1.0.0-alpha4
 

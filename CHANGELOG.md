@@ -3,6 +3,8 @@
 - (internal) Fix env module initialization order
 - (feature) Add health module
 - (bug) Allow debug log level configuration
+- (feature) Add prometheus metrics module
+- (feature) Add fiber middleware registry
 
 # 1.0.0-alpha4
 

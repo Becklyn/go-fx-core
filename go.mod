@@ -6,6 +6,7 @@ require (
 	github.com/go-playground/validator/v10 v10.11.0
 	github.com/gofiber/fiber/v2 v2.33.0
 	github.com/joho/godotenv v1.4.0
+	github.com/matryer/is v1.4.0
 	github.com/sirupsen/logrus v1.8.1
 	go.uber.org/fx v1.17.1
 	google.golang.org/grpc v1.46.2

@@ -17,7 +17,7 @@ func newFiber(
 	app := fiber.New()
 
 	app.Use(fiberlog.New(fiberlog.Config{
-		Format: "${status} - ${latency} ${method} ${path}\n",
+		Format: "${latency} - ${status} ${method} ${path}\n",
 		Output: logger.Writer(),
 	}))
 

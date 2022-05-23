@@ -28,7 +28,9 @@ func newLogrus(_ *env.Env) *logrus.Logger {
 		TimestampFormat: time.RFC822,
 	})
 	logger.SetLevel(getLogLevel())
-	logger.Infof("Using %s environment", env.String(env.APP_ENV))
+	logger.WithFields(logrus.Fields{
+		"environment": env.String(env.APP_ENV),
+	}).Info("Using environment")
 
 	return logger
 }

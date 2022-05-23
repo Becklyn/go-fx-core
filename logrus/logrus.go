@@ -1,4 +1,4 @@
-package core
+package logrus
 
 import (
 	"os"
@@ -7,18 +7,10 @@ import (
 	"github.com/Becklyn/go-fx-core/env"
 
 	"github.com/sirupsen/logrus"
-	"go.uber.org/fx"
 	"go.uber.org/fx/fxevent"
 )
 
 var LOG_LEVEL = "LOG_LEVEL"
-
-var LogrusModule = fx.Options(
-	fx.Provide(
-		newLogrus,
-	),
-	fx.WithLogger(logrusFxLogger),
-)
 
 func newLogrus(_ *env.Env) *logrus.Logger {
 	logger := logrus.New()

@@ -1,10 +1,9 @@
-package web
+package fiber
 
 import "go.uber.org/fx"
 
 var Module = fx.Options(
 	fx.Provide(
-		newFiberMiddlewareRegistry,
 		newFiber,
 	),
 	fx.Invoke(

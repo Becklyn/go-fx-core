@@ -5,11 +5,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Becklyn/go-fx-core/web"
 	"github.com/gofiber/fiber/v2"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
-	"go.uber.org/fx"
 )
 
 var currentRequests = promauto.NewGaugeVec(
@@ -43,21 +41,13 @@ var requestDuration = promauto.NewHistogramVec(
 	[]string{"status", "method", "path"},
 )
 
-type FiberMetricsMiddleware struct {
-	fx.In
+type FiberMetricsMiddleware struct{}
+
+func newFiberMetricsMiddleware() *FiberMetricsMiddleware {
+	return &FiberMetricsMiddleware{}
 }
 
-func useFiberMetricsMiddleware(
-	registry *web.FiberMiddlewareRegistry,
-	middleware FiberMetricsMiddleware,
-) {
-	registry.Use(&web.FiberMiddleware{
-		Name:    "Fiber metrics",
-		Handler: middleware.Handler,
-	})
-}
-
-func (m *FiberMetricsMiddleware) Handler(ctx *fiber.Ctx) error {
+func (m *FiberMetricsMiddleware) Handle(ctx *fiber.Ctx) error {
 	start := time.Now()
 	method := string(ctx.Context().Method())
 	path := string(ctx.Context().Path())

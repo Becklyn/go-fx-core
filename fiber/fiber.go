@@ -1,9 +1,10 @@
-package web
+package fiber
 
 import (
 	"context"
 
 	"github.com/Becklyn/go-fx-core/env"
+	"github.com/Becklyn/go-fx-core/metrics"
 	"github.com/gofiber/fiber/v2"
 	fiberlog "github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/sirupsen/logrus"
@@ -12,7 +13,7 @@ import (
 
 func newFiber(
 	logger *logrus.Logger,
-	registry *FiberMiddlewareRegistry,
+	metricsMiddleware *metrics.FiberMetricsMiddleware,
 ) *fiber.App {
 	app := fiber.New()
 
@@ -21,7 +22,7 @@ func newFiber(
 		Output: logger.Writer(),
 	}))
 
-	registry.Register(app)
+	app.Use(metricsMiddleware.Handle)
 
 	return app
 }

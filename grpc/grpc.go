@@ -1,4 +1,4 @@
-package core
+package grpc
 
 import (
 	"context"
@@ -11,10 +11,6 @@ import (
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
-)
-
-var GrpcModule = fx.Provide(
-	newGrpc,
 )
 
 func newGrpc(lifecycle fx.Lifecycle, logger *logrus.Logger) *grpc.Server {

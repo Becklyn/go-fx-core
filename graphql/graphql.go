@@ -1,27 +1,9 @@
-package core
+package graphql
 
 import (
 	"github.com/graphql-go/graphql"
 	"github.com/sirupsen/logrus"
 	"go.uber.org/fx"
-)
-
-var GraphQlModule = fx.Options(
-	fx.Provide(
-		fx.Annotated{
-			Name:   "query",
-			Target: newGraphQlQuery,
-		},
-		fx.Annotated{
-			Name:   "mutation",
-			Target: newGraphQlMutation,
-		},
-		fx.Annotated{
-			Name:   "subscription",
-			Target: newGraphQlSubscribtion,
-		},
-		newGraphQlSchema,
-	),
 )
 
 func newGraphQlQuery() *graphql.Object {

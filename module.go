@@ -11,9 +11,9 @@ import (
 var Module = fx.Options(
 	env.Module,
 	LogrusModule,
-	web.Module,
-	health.Module,
-	metrics.Module,
-	GrpcModule,
 	ValidatorModule,
+	metrics.Module,
+	health.Module,
+	GrpcModule,
+	web.Module,
 )

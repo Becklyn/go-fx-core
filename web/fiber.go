@@ -11,12 +11,9 @@ import (
 )
 
 func newFiber(
-	lifecycle fx.Lifecycle,
-	middlewareRegisty *FiberMiddlewareRegistry,
 	logger *logrus.Logger,
+	registry *FiberMiddlewareRegistry,
 ) *fiber.App {
-	addr := env.StringWithDefault("FIBER_ADDR", ":3000")
-
 	app := fiber.New()
 
 	app.Use(fiberlog.New(fiberlog.Config{
@@ -24,15 +21,17 @@ func newFiber(
 		Output: logger.Writer(),
 	}))
 
-	for _, middleware := range *middlewareRegisty {
-		if middleware.Route == "" {
-			app.Use(middleware.Handler)
-			logger.Infof("Registered %s middleware globally", middleware.Name)
-		} else {
-			app.Use(middleware.Route, middleware.Handler)
-			logger.Infof("Registered %s middleware on route %s", middleware.Name, middleware.Route)
-		}
-	}
+	registry.Register(app)
+
+	return app
+}
+
+func useFiber(
+	lifecycle fx.Lifecycle,
+	app *fiber.App,
+	logger *logrus.Logger,
+) {
+	addr := env.StringWithDefault("FIBER_ADDR", ":3000")
 
 	lifecycle.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
@@ -50,6 +49,4 @@ func newFiber(
 			return nil
 		},
 	})
-
-	return app
 }

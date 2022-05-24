@@ -1,4 +1,4 @@
-package core
+package grpc
 
 import (
 	"context"
@@ -11,10 +11,6 @@ import (
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
-)
-
-var GrpcModule = fx.Provide(
-	newGrpc,
 )
 
 func newGrpc(lifecycle fx.Lifecycle, logger *logrus.Logger) *grpc.Server {
@@ -40,7 +36,9 @@ func newGrpc(lifecycle fx.Lifecycle, logger *logrus.Logger) *grpc.Server {
 					logger.Fatal(err)
 				}
 			}()
-			logger.Info(fmt.Sprintf("gRPC server running on %s://%s", uri.Scheme, uri.Host))
+			logger.WithFields(logrus.Fields{
+				"address": fmt.Sprintf("%s://%s", uri.Scheme, uri.Host),
+			}).Info("gRPC server listening")
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {

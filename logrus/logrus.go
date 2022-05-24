@@ -1,4 +1,4 @@
-package core
+package logrus
 
 import (
 	"os"
@@ -7,18 +7,10 @@ import (
 	"github.com/Becklyn/go-fx-core/env"
 
 	"github.com/sirupsen/logrus"
-	"go.uber.org/fx"
 	"go.uber.org/fx/fxevent"
 )
 
 var LOG_LEVEL = "LOG_LEVEL"
-
-var LogrusModule = fx.Options(
-	fx.Provide(
-		newLogrus,
-	),
-	fx.WithLogger(logrusFxLogger),
-)
 
 func newLogrus(_ *env.Env) *logrus.Logger {
 	logger := logrus.New()
@@ -28,7 +20,9 @@ func newLogrus(_ *env.Env) *logrus.Logger {
 		TimestampFormat: time.RFC822,
 	})
 	logger.SetLevel(getLogLevel())
-	logger.Infof("Using %s environment", env.String(env.APP_ENV))
+	logger.WithFields(logrus.Fields{
+		"environment": env.String(env.APP_ENV),
+	}).Info("Using environment")
 
 	return logger
 }

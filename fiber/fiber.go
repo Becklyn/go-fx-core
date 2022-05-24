@@ -1,9 +1,10 @@
-package web
+package fiber
 
 import (
 	"context"
 
 	"github.com/Becklyn/go-fx-core/env"
+	"github.com/Becklyn/go-fx-core/metrics"
 	"github.com/gofiber/fiber/v2"
 	fiberlog "github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/sirupsen/logrus"
@@ -11,28 +12,27 @@ import (
 )
 
 func newFiber(
-	lifecycle fx.Lifecycle,
-	middlewareRegisty *FiberMiddlewareRegistry,
 	logger *logrus.Logger,
+	metricsMiddleware *metrics.FiberMetricsMiddleware,
 ) *fiber.App {
-	addr := env.StringWithDefault("FIBER_ADDR", ":3000")
-
 	app := fiber.New()
 
 	app.Use(fiberlog.New(fiberlog.Config{
-		Format: "${status} - ${latency} ${method} ${path}\n",
+		Format: "${latency} - ${status} ${method} ${path}\n",
 		Output: logger.Writer(),
 	}))
 
-	for _, middleware := range *middlewareRegisty {
-		if middleware.Route == "" {
-			app.Use(middleware.Handler)
-			logger.Infof("Registered %s middleware globally", middleware.Name)
-		} else {
-			app.Use(middleware.Route, middleware.Handler)
-			logger.Infof("Registered %s middleware on route %s", middleware.Name, middleware.Route)
-		}
-	}
+	app.Use(metricsMiddleware.Handle)
+
+	return app
+}
+
+func useFiber(
+	lifecycle fx.Lifecycle,
+	app *fiber.App,
+	logger *logrus.Logger,
+) {
+	addr := env.StringWithDefault("FIBER_ADDR", ":3000")
 
 	lifecycle.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
@@ -50,6 +50,4 @@ func newFiber(
 			return nil
 		},
 	})
-
-	return app
 }

@@ -1,8 +1,7 @@
-package web
+package grpc
 
 import "go.uber.org/fx"
 
 var Module = fx.Provide(
-	newFiberMiddlewareRegistry,
-	newFiber,
+	newGrpc,
 )

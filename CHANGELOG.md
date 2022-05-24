@@ -1,3 +1,8 @@
+# v1.0.0-alpha7
+
+- (internal) Fix metrics middleware
+- (bc) Remove fiber middleware registry
+
 # v1.0.0-alpha6
 
 - (improvement) Add metrics module to core module

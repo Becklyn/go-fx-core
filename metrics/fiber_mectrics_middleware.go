@@ -2,7 +2,6 @@ package metrics
 
 import (
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -52,7 +51,7 @@ func (m *FiberMetricsMiddleware) Handle(ctx *fiber.Ctx) error {
 	method := string(ctx.Context().Method())
 	path := string(ctx.Context().Path())
 
-	if strings.Contains(path, "metrics") || strings.Contains(path, "health") {
+	if path == "/metrics" || path == "/health" {
 		return ctx.Next()
 	}
 

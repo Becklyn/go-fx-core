@@ -13,7 +13,7 @@ type ServiceHealth struct {
 	mux    sync.RWMutex
 }
 
-func NewServiceHealth(logger *logrus.Logger) *ServiceHealth {
+func newServiceHealth(logger *logrus.Logger) *ServiceHealth {
 	return &ServiceHealth{
 		components: make(map[string]componentHealth),
 		logger:     logger,

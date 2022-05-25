@@ -1,4 +1,4 @@
-package health
+package readyness
 
 import (
 	"go.uber.org/fx"
@@ -6,9 +6,9 @@ import (
 
 var Module = fx.Options(
 	fx.Provide(
-		newServiceHealth,
+		newServiceReadyness,
 	),
 	fx.Invoke(
-		useHealthEndpoint,
+		useReadynessEndpoint,
 	),
 )

@@ -1,3 +1,7 @@
+# v1.0.0-alpha8
+
+- (feature) Add readyness module
+
 # v1.0.0-alpha7
 
 - (internal) Fix metrics middleware

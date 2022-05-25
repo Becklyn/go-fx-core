@@ -6,6 +6,7 @@ import (
 	"github.com/Becklyn/go-fx-core/health"
 	"github.com/Becklyn/go-fx-core/logrus"
 	"github.com/Becklyn/go-fx-core/metrics"
+	"github.com/Becklyn/go-fx-core/readyness"
 	"go.uber.org/fx"
 )
 
@@ -14,5 +15,6 @@ var Module = fx.Options(
 	logrus.Module,
 	metrics.Module,
 	health.Module,
+	readyness.Module,
 	fiber.Module,
 )

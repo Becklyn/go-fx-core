@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"net"
 	"net/url"
+	"time"
 
 	"github.com/Becklyn/go-fx-core/env"
 	"github.com/sirupsen/logrus"
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/keepalive"
 	"google.golang.org/grpc/reflection"
 )
 
@@ -25,7 +27,20 @@ func newGrpc(lifecycle fx.Lifecycle, logger *logrus.Logger) *grpc.Server {
 		logger.Fatal(err)
 	}
 
-	server := grpc.NewServer()
+	keepaliveOptions := grpc.KeepaliveParams(keepalive.ServerParameters{
+		Time:    time.Minute,
+		Timeout: 3 * time.Second,
+	})
+
+	keepaliveEnforcementOptions := grpc.KeepaliveEnforcementPolicy(keepalive.EnforcementPolicy{
+		MinTime:             30 * time.Second,
+		PermitWithoutStream: true,
+	})
+
+	server := grpc.NewServer(
+		keepaliveOptions,
+		keepaliveEnforcementOptions,
+	)
 
 	lifecycle.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {

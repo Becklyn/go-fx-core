@@ -14,7 +14,7 @@ var Module = fx.Options(
 	env.Module,
 	logrus.Module,
 	metrics.Module,
-	health.Module,
 	readyness.Module,
+	health.Module,
 	fiber.Module,
 )

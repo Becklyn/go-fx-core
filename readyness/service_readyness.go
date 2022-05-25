@@ -13,7 +13,7 @@ type ServiceReadyness struct {
 	mux    sync.RWMutex
 }
 
-func NewServiceReadyness(logger *logrus.Logger) *ServiceReadyness {
+func newServiceReadyness(logger *logrus.Logger) *ServiceReadyness {
 	return &ServiceReadyness{
 		components: make(map[string]bool),
 		logger:     logger,
@@ -53,7 +53,7 @@ func (s *ServiceReadyness) SetReady(component string) {
 
 	s.logger.WithFields(logrus.Fields{
 		"component": component,
-	}).Warn("Component is ready")
+	}).Info("Component is ready")
 }
 
 func (s *ServiceReadyness) Register(component string) {
@@ -64,5 +64,5 @@ func (s *ServiceReadyness) Register(component string) {
 
 	s.logger.WithFields(logrus.Fields{
 		"component": component,
-	}).Warn("Registered unready component")
+	}).Info("Registered unready component")
 }

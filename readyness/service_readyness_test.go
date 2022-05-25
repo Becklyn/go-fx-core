@@ -9,7 +9,7 @@ import (
 
 func Test_IsReady_ReturnsHealthyByDefault(t *testing.T) {
 	logger := logrus.New()
-	serviceReadyness := NewServiceReadyness(logger)
+	serviceReadyness := newServiceReadyness(logger)
 
 	ready, _ := serviceReadyness.IsReady()
 	assert.True(t, ready) // must be ready by default
@@ -17,7 +17,7 @@ func Test_IsReady_ReturnsHealthyByDefault(t *testing.T) {
 
 func Test_IsReady_ReturnsNoComponentByDefault(t *testing.T) {
 	logger := logrus.New()
-	serviceReadyness := NewServiceReadyness(logger)
+	serviceReadyness := newServiceReadyness(logger)
 
 	_, component := serviceReadyness.IsReady()
 	assert.Equal(t, "", component) // must have no component by default
@@ -25,7 +25,7 @@ func Test_IsReady_ReturnsNoComponentByDefault(t *testing.T) {
 
 func Test_IsReady_ForANewComponent_ReturnsNotReady(t *testing.T) {
 	logger := logrus.New()
-	serviceReadyness := NewServiceReadyness(logger)
+	serviceReadyness := newServiceReadyness(logger)
 
 	ready, _ := serviceReadyness.IsReady("foo")
 	assert.False(t, ready) // must be not ready by default
@@ -33,7 +33,7 @@ func Test_IsReady_ForANewComponent_ReturnsNotReady(t *testing.T) {
 
 func Test_IsReady_ForANewComponent_ReturnsComponent(t *testing.T) {
 	logger := logrus.New()
-	serviceReadyness := NewServiceReadyness(logger)
+	serviceReadyness := newServiceReadyness(logger)
 
 	_, component := serviceReadyness.IsReady("foo")
 	assert.Equal(t, "foo", component) // must have component by default
@@ -41,7 +41,7 @@ func Test_IsReady_ForANewComponent_ReturnsComponent(t *testing.T) {
 
 func Test_IsReady_ReturnsNotReady_IfAnyComponentIsNotReady(t *testing.T) {
 	logger := logrus.New()
-	serviceReadyness := NewServiceReadyness(logger)
+	serviceReadyness := newServiceReadyness(logger)
 
 	serviceReadyness.Register("foo")
 	serviceReadyness.SetReady("bar")
@@ -52,7 +52,7 @@ func Test_IsReady_ReturnsNotReady_IfAnyComponentIsNotReady(t *testing.T) {
 
 func Test_IsReady_ForAReadyComponent_ReturnsReady(t *testing.T) {
 	logger := logrus.New()
-	serviceReadyness := NewServiceReadyness(logger)
+	serviceReadyness := newServiceReadyness(logger)
 
 	serviceReadyness.SetReady("foo")
 
@@ -62,7 +62,7 @@ func Test_IsReady_ForAReadyComponent_ReturnsReady(t *testing.T) {
 
 func Test_IsReady_ForANotReadyComopnent_ReturnsNotReady(t *testing.T) {
 	logger := logrus.New()
-	serviceReadyness := NewServiceReadyness(logger)
+	serviceReadyness := newServiceReadyness(logger)
 
 	serviceReadyness.Register("foo")
 
@@ -72,7 +72,7 @@ func Test_IsReady_ForANotReadyComopnent_ReturnsNotReady(t *testing.T) {
 
 func Test_IsReady_ForANotReadyComopnent_ReturnsComponent(t *testing.T) {
 	logger := logrus.New()
-	serviceReadyness := NewServiceReadyness(logger)
+	serviceReadyness := newServiceReadyness(logger)
 
 	serviceReadyness.SetReady("foo")
 

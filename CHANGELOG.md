@@ -1,5 +1,6 @@
 # v1.0.0-alpha9
 
+- (bug) Fix bool env variable always returning default value if set to false
 - (improvement) Add keepalive rules to the grpc server
 
 # v1.0.0-alpha8

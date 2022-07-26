@@ -83,9 +83,8 @@ func Bool(key string) bool {
 }
 
 func BoolWithDefault(key string, defaultValue bool) bool {
-	value := Bool(key)
-	if !value {
+	if _, isSet := os.LookupEnv(key); !isSet {
 		return defaultValue
 	}
-	return value
+	return Bool(key)
 }

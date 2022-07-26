@@ -1,3 +1,7 @@
+# v1.0.0-alpha9
+
+- (improvement) Add keepalive rules to the grpc server
+
 # v1.0.0-alpha8
 
 - (feature) Add readyness module

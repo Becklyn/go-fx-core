@@ -1,3 +1,7 @@
+# v1.0.0-alpha9
+
+- (bug) Fix bool env variable always returning default value if set to false
+
 # v1.0.0-alpha8
 
 - (feature) Add readyness module

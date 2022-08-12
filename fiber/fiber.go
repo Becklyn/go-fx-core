@@ -23,6 +23,7 @@ func newFiber(
 	}))
 
 	app.Use(metricsMiddleware.Handle)
+	app.Use(newErrorMiddleware(logger))
 
 	return app
 }

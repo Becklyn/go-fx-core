@@ -1,3 +1,7 @@
+# v1.0.0-alpha10
+
+- (feature) Add error handling middleware to fiber module
+
 # v1.0.0-alpha9
 
 - (bug) Fix bool env variable always returning default value if set to false

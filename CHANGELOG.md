@@ -1,3 +1,7 @@
+# v1.0.0
+
+- (feature) v1 release
+
 # v1.0.0-alpha10
 
 - (feature) Add error handling middleware to fiber module

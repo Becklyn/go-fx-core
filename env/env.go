@@ -70,11 +70,19 @@ func Int(key string) int {
 }
 
 func IntWithDefault(key string, defaultValue int) int {
-	value := Int(key)
-	if value == -1 {
+	value := os.Getenv(key)
+
+	if len(value) == 0 {
 		return defaultValue
 	}
-	return value
+
+	intValue, err := strconv.Atoi(value)
+
+	if err != nil {
+		return defaultValue
+	}
+
+	return intValue
 }
 
 func Bool(key string) bool {

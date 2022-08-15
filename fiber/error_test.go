@@ -13,7 +13,7 @@ func TestFiberError(t *testing.T) {
 	expectedErr := errors.New("test")
 	expectedStatus := gofiber.StatusInternalServerError
 
-	err := fiber.NewFiberError(expectedErr, expectedStatus)
+	err := fiber.NewError(expectedErr, expectedStatus)
 
 	assert.Equal(t, expectedErr.Error(), err.Error())
 	assert.Equal(t, expectedStatus, err.StatusCode())

@@ -17,6 +17,7 @@ func TestIsDevelopment(t *testing.T) {
 }
 
 func TestString(t *testing.T) {
+	os.Unsetenv("test")
 	assert.Empty(t, env.String("test"))
 
 	os.Setenv("test", "value")
@@ -25,6 +26,7 @@ func TestString(t *testing.T) {
 }
 
 func TestInt(t *testing.T) {
+	os.Unsetenv("test")
 	assert.Equal(t, -1, env.Int("test"))
 
 	os.Setenv("test", "not an int")
@@ -35,6 +37,7 @@ func TestInt(t *testing.T) {
 }
 
 func TestIntWithDefault(t *testing.T) {
+	os.Unsetenv("test")
 	assert.Equal(t, 321, env.IntWithDefault("test", 321))
 
 	os.Setenv("test", "not an int")
@@ -48,6 +51,7 @@ func TestIntWithDefault(t *testing.T) {
 }
 
 func TestBool(t *testing.T) {
+	os.Unsetenv("test")
 	assert.False(t, env.Bool("test"))
 
 	os.Setenv("test", "not a bool")
@@ -67,6 +71,7 @@ func TestBool(t *testing.T) {
 }
 
 func TestBoolWithDefault(t *testing.T) {
+	os.Unsetenv("test")
 	assert.False(t, env.BoolWithDefault("test", false))
 	assert.True(t, env.BoolWithDefault("test", true))
 

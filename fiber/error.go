@@ -5,23 +5,23 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type FiberError struct {
+type Error struct {
 	err        error
 	statusCode int
 }
 
-func NewFiberError(err error, statusCode int) *FiberError {
-	return &FiberError{
+func NewError(err error, statusCode int) *Error {
+	return &Error{
 		err:        err,
 		statusCode: statusCode,
 	}
 }
 
-func (e *FiberError) Error() string {
+func (e *Error) Error() string {
 	return e.err.Error()
 }
 
-func (e *FiberError) StatusCode() int {
+func (e *Error) StatusCode() int {
 	return e.statusCode
 }
 
@@ -32,7 +32,7 @@ func newErrorMiddleware(logger *logrus.Logger) fiber.Handler {
 			return nil
 		}
 
-		fiberError, ok := err.(*FiberError)
+		fiberError, ok := err.(*Error)
 		if !ok {
 			return err
 		}

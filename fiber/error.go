@@ -39,6 +39,8 @@ func newErrorMiddleware(logger *logrus.Logger) fiber.Handler {
 
 		logger.Error(fiberError)
 
+		c.Set(fiber.HeaderContentType, fiber.MIMETextPlainCharsetUTF8)
+
 		if err := c.SendString(err.Error()); err != nil {
 			return err
 		}

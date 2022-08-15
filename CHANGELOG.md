@@ -1,3 +1,7 @@
+# v1.0.1
+
+- (bug) Set correct content type when returning error messages in fiber
+
 # v1.0.0
 
 - (feature) v1 release

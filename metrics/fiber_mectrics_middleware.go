@@ -83,5 +83,5 @@ func (m *FiberMetricsMiddleware) Handle(ctx *fiber.Ctx) error {
 		path,
 	).Observe(duration)
 
-	return nil
+	return err
 }

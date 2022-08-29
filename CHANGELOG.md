@@ -1,3 +1,7 @@
+# v1.0.2
+
+- (bug) Fix error handling in metrics middleware
+
 # v1.0.1
 
 - (bug) Set correct content type when returning error messages in fiber

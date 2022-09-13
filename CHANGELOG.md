@@ -1,3 +1,7 @@
+# v1.1.1
+
+- (bug) Fix module declared as program
+
 # v1.1.0
 
 - (feature) Add injectable middleware for fiber

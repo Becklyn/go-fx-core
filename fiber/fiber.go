@@ -5,6 +5,7 @@ import (
 
 	"github.com/Becklyn/go-fx-core/env"
 	"github.com/Becklyn/go-fx-core/metrics"
+	"github.com/Becklyn/go-fx-core/middleware"
 	"github.com/gofiber/fiber/v2"
 	fiberlog "github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/sirupsen/logrus"
@@ -13,7 +14,7 @@ import (
 
 func newFiber(
 	logger *logrus.Logger,
-	metricsMiddleware *metrics.FiberMetricsMiddleware,
+	middleware *middleware.MiddlewareRegistry,
 ) *fiber.App {
 	app := fiber.New()
 
@@ -22,8 +23,9 @@ func newFiber(
 		Output: logger.Writer(),
 	}))
 
-	app.Use(metricsMiddleware.Handle)
-	app.Use(newErrorMiddleware(logger))
+	app.Use(errorMiddleware(logger))
+	app.Use(metrics.MetricsMiddleware())
+	app.Use(middleware.Handle)
 
 	return app
 }

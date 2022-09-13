@@ -1,3 +1,8 @@
+# v1.1.0
+
+- (feature) Add injectable middleware for fiber
+- (feature) Add nocors module for development with out cors
+
 # v1.0.1
 
 - (bug) Set correct content type when returning error messages in fiber

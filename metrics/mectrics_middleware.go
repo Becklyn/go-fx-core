@@ -40,48 +40,45 @@ var requestDuration = promauto.NewHistogramVec(
 	[]string{"status", "method", "path"},
 )
 
-type FiberMetricsMiddleware struct{}
+func MetricsMiddleware() fiber.Handler {
+	return func(ctx *fiber.Ctx) error {
+		start := time.Now()
+		method := string(ctx.Context().Method())
+		path := string(ctx.Context().Path())
 
-func newFiberMetricsMiddleware() *FiberMetricsMiddleware {
-	return &FiberMetricsMiddleware{}
-}
+		if path == "/metrics" || path == "/health" {
+			return ctx.Next()
+		}
 
-func (m *FiberMetricsMiddleware) Handle(ctx *fiber.Ctx) error {
-	start := time.Now()
-	method := string(ctx.Context().Method())
-	path := string(ctx.Context().Path())
+		currentRequests.WithLabelValues(
+			method,
+			path,
+		).Inc()
+		defer currentRequests.WithLabelValues(
+			method,
+			path,
+		).Dec()
 
-	if path == "/metrics" || path == "/health" {
-		return ctx.Next()
+		err := ctx.Next()
+
+		status := strconv.Itoa(ctx.Response().StatusCode())
+		if err, ok := err.(*fiber.Error); err != nil && ok {
+			status = strconv.Itoa(err.Code)
+		}
+
+		totalRequests.WithLabelValues(
+			status,
+			method,
+			path,
+		).Inc()
+
+		duration := time.Since(start).Seconds()
+		requestDuration.WithLabelValues(
+			status,
+			method,
+			path,
+		).Observe(duration)
+
+		return err
 	}
-
-	currentRequests.WithLabelValues(
-		method,
-		path,
-	).Inc()
-	defer currentRequests.WithLabelValues(
-		method,
-		path,
-	).Dec()
-
-	err := ctx.Next()
-	status := strconv.Itoa(ctx.Response().StatusCode())
-	if err, ok := err.(*fiber.Error); err != nil && ok {
-		status = strconv.Itoa(err.Code)
-	}
-
-	totalRequests.WithLabelValues(
-		status,
-		method,
-		path,
-	).Inc()
-
-	duration := time.Since(start).Seconds()
-	requestDuration.WithLabelValues(
-		status,
-		method,
-		path,
-	).Observe(duration)
-
-	return nil
 }

@@ -25,9 +25,9 @@ func (e *Error) StatusCode() int {
 	return e.statusCode
 }
 
-func newErrorMiddleware(logger *logrus.Logger) fiber.Handler {
-	return func(c *fiber.Ctx) error {
-		err := c.Next()
+func errorMiddleware(logger *logrus.Logger) fiber.Handler {
+	return func(ctx *fiber.Ctx) error {
+		err := ctx.Next()
 		if err == nil {
 			return nil
 		}
@@ -39,11 +39,11 @@ func newErrorMiddleware(logger *logrus.Logger) fiber.Handler {
 
 		logger.Error(fiberError)
 
-		c.Set(fiber.HeaderContentType, fiber.MIMETextPlainCharsetUTF8)
+		ctx.Set(fiber.HeaderContentType, fiber.MIMETextPlainCharsetUTF8)
 
-		if err := c.SendString(err.Error()); err != nil {
+		if err := ctx.SendString(err.Error()); err != nil {
 			return err
 		}
-		return c.SendStatus(fiberError.statusCode)
+		return ctx.SendStatus(fiberError.statusCode)
 	}
 }

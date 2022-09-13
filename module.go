@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/Becklyn/go-fx-core/cors"
 	"github.com/Becklyn/go-fx-core/env"
 	f "github.com/Becklyn/go-fx-core/fiber"
 	"github.com/Becklyn/go-fx-core/health"
@@ -16,7 +15,6 @@ import (
 var Module = fx.Options(
 	env.Module,
 	logrus.Module,
-	cors.Module,
 	metrics.Module,
 	readyness.Module,
 	health.Module,

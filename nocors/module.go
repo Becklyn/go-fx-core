@@ -1,4 +1,4 @@
-package cors
+package nocors
 
 import (
 	"github.com/Becklyn/go-fx-core/middleware"

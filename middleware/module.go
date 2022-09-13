@@ -48,7 +48,7 @@ func (r *MiddlewareRegistry) Handle(c *fiber.Ctx) error {
 			}
 		}
 	}
-	if errs == 0 {
+	if len(r.handlers) > 0 && errs == 0 {
 		return nil
 	}
 	return c.Next()

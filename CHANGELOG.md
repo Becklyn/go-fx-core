@@ -1,7 +1,7 @@
 # v1.1.0
 
 - (feature) Add injectable middleware for fiber
-- (feature) Add nocors module for development with out cors
+- (feature) Add nocors module for development without cors
 
 # v1.0.1
 

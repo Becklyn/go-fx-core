@@ -26,7 +26,7 @@ func NewExampleHandler(
 }
 
 func (h *ExampleHandler) Handle(ctx context.Context, command *ExampleCommand) error {
-	return repo.DoSomething(ctx command.Value)
+	return repo.DoSomething(ctx, command.Value)
 }
 ```
 

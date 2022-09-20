@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/Becklyn/go-fx-core/fiber"
+	"github.com/Becklyn/go-fx-core/v2/fiber"
 	gofiber "github.com/gofiber/fiber/v2"
 	"github.com/stretchr/testify/assert"
 )

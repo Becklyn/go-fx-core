@@ -1,3 +1,7 @@
+# v2.0.1
+
+- (bug) Fix module version
+
 # v2.0.0
 
 - (bc) Add `context.Context` as first param in all cqrs handler intarfaces

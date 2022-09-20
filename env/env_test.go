@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/Becklyn/go-fx-core/env"
+	"github.com/Becklyn/go-fx-core/v2/env"
 	"github.com/stretchr/testify/assert"
 )
 

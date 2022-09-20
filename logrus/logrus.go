@@ -4,7 +4,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/Becklyn/go-fx-core/env"
+	"github.com/Becklyn/go-fx-core/v2/env"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/fx/fxevent"

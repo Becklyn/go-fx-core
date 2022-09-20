@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"github.com/Becklyn/go-fx-core/env"
+	"github.com/Becklyn/go-fx-core/v2/env"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )

@@ -1,4 +1,4 @@
-module github.com/Becklyn/go-fx-core
+module github.com/Becklyn/go-fx-core/v2
 
 go 1.18
 

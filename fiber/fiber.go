@@ -3,8 +3,8 @@ package fiber
 import (
 	"context"
 
-	"github.com/Becklyn/go-fx-core/env"
-	"github.com/Becklyn/go-fx-core/metrics"
+	"github.com/Becklyn/go-fx-core/v2/env"
+	"github.com/Becklyn/go-fx-core/v2/metrics"
 	"github.com/gofiber/fiber/v2"
 	fiberlog "github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/sirupsen/logrus"

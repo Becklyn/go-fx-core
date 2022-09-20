@@ -1,12 +1,12 @@
 package core
 
 import (
-	"github.com/Becklyn/go-fx-core/env"
-	"github.com/Becklyn/go-fx-core/fiber"
-	"github.com/Becklyn/go-fx-core/health"
-	"github.com/Becklyn/go-fx-core/logrus"
-	"github.com/Becklyn/go-fx-core/metrics"
-	"github.com/Becklyn/go-fx-core/readyness"
+	"github.com/Becklyn/go-fx-core/v2/env"
+	"github.com/Becklyn/go-fx-core/v2/fiber"
+	"github.com/Becklyn/go-fx-core/v2/health"
+	"github.com/Becklyn/go-fx-core/v2/logrus"
+	"github.com/Becklyn/go-fx-core/v2/metrics"
+	"github.com/Becklyn/go-fx-core/v2/readyness"
 	"go.uber.org/fx"
 )
 

@@ -5,7 +5,7 @@
 Adding _go-fx-core_ to a Go project is as easy as calling this command
 
 ```shell
-go get -u github.com/Becklyn/go-fx-core
+go get -u github.com/Becklyn/go-fx-core/v2
 ```
 
 ## Modules
@@ -33,7 +33,10 @@ The project must be based on the [uber-go/fx](https://github.com/uber-go/fx) app
 ```go
 package main
 
-import "go.uber.org/fx"
+import (
+	core "github.com/Becklyn/go-fx-core/v2"
+	"go.uber.org/fx"
+)
 
 func main() {
     // Creates a new fx application

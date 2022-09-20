@@ -1,6 +1,8 @@
 # v2.0.0
 
 - (bc) Add `context.Context` as first param in all cqrs handler intarfaces
+- (bc) Replace `MiddlewareRegistry` by `MiddlewareHandlerMap`
+- (bc) Move `cors.Module` to `middleware.NoCors`
 
 # v1.1.1
 

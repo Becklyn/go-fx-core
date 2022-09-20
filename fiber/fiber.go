@@ -31,7 +31,7 @@ func newFiber(params FiberParams) *fiber.App {
 	app.Use(errorMiddleware(params.Logger))
 	app.Use(metrics.MetricsMiddleware())
 
-	if params.Logger != nil {
+	if params.Middleware != nil {
 		for path, handlers := range *params.Middleware {
 			for _, handler := range handlers {
 				if handler == nil {

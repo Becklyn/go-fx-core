@@ -1,3 +1,7 @@
+# v2.0.2
+
+- (bug) Fix fiber middleware definition check
+
 # v2.0.1
 
 - (bug) Fix module version

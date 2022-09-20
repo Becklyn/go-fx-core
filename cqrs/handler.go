@@ -1,13 +1,15 @@
 package cqrs
 
+import "context"
+
 type CommandHandler[TCommand any] interface {
-	Handle(command TCommand) error
+	Handle(ctx context.Context, command TCommand) error
 }
 
 type QueryHandler[TQuery any, TResult any] interface {
-	Handle(query TQuery) (TResult, error)
+	Handle(ctx context.Context, query TQuery) (TResult, error)
 }
 
 type EventHandler[TEvent any] interface {
-	Handle(event TEvent) error
+	Handle(ctx context.Context, event TEvent) error
 }

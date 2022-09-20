@@ -25,8 +25,8 @@ func NewExampleHandler(
 	}
 }
 
-func (h *ExampleHandler) Handle(command *ExampleCommand) error {
-	return repo.DoSomething(command.Value)
+func (h *ExampleHandler) Handle(ctx context.Context, command *ExampleCommand) error {
+	return repo.DoSomething(ctx, command.Value)
 }
 ```
 
@@ -49,8 +49,8 @@ func NewExampleHandler(
 	}
 }
 
-func (h *ExampleHandler) Handle(query *ExampleQuery) (*Entity, error) {
-	return repo.GetExampleEntity(query.Id)
+func (h *ExampleHandler) Handle(ctx context.Context, query *ExampleQuery) (*Entity, error) {
+	return repo.GetExampleEntity(ctx, query.Id)
 }
 ```
 
@@ -73,7 +73,7 @@ func NewExampleHandler(
 	}
 }
 
-func (h *ExampleHandler) Handle(event *ExampleEvent) error {
-	return service.Handle(event.Value)
+func (h *ExampleHandler) Handle(ctx context.Context, event *ExampleEvent) error {
+	return service.Handle(ctx, event.Value)
 }
 ```
